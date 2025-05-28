@@ -1,0 +1,17 @@
+name: MultiHome
+main: com.plugin.multihome.MultiHomePlugin
+version: 1.0.0
+authors:
+  - WŁOSZCZ
+api-version: 1.20
+commands:
+  sethome:
+    description: Ustawia dom o podanej nazwie
+    usage: /sethome <nazwa>
+  home:
+    description: Teleportuje do ustawionego domu
+    usage: /home <nazwa>
+permissions:
+  multihome.use:
+    description: Pozwala korzystać z komend sethome i home
+    default: true

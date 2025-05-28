@@ -22,7 +22,7 @@ public class SetHomeCommand implements CommandExecutor {
             return true;
         }
         if (args.length != 1) {
-            sender.sendMessage("Użycie: /sethome <nazwa>");
+            sender.sendMessage("Użycie: /setmultihome <nazwa>");
             return true;
         }
         Player player = (Player) sender;

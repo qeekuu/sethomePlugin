@@ -3,12 +3,9 @@ package com.plug.multihome.commands;
 import com.plug.multihome.MultiHomePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Collections;
@@ -33,45 +30,35 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         Player player = (Player) sender;
-        String homeName = args[0].toLowerCase();
-
+        String name = args[0].toLowerCase();
         FileConfiguration cfg = plugin.getHomesConfig();
-        String path = "players." + player.getUniqueId() + "." + homeName;
+        String path = "players." + player.getUniqueId() + "." + name;
         if (!cfg.contains(path)) {
-            player.sendMessage("Dom o nazwie '" + homeName + "' nie istnieje.");
+            player.sendMessage("Dom o nazwie '" + name + "' nie istnieje.");
             return true;
         }
-
-        String world = cfg.getString(path + ".world");
-        double x = cfg.getDouble(path + ".x");
-        double y = cfg.getDouble(path + ".y");
-        double z = cfg.getDouble(path + ".z");
-        float yaw = (float) cfg.getDouble(path + ".yaw");
-        float pitch = (float) cfg.getDouble(path + ".pitch");
-
-        Location loc = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
+        Location loc = new Location(
+                Bukkit.getWorld(cfg.getString(path + ".world")),
+                cfg.getDouble(path + ".x"),
+                cfg.getDouble(path + ".y"),
+                cfg.getDouble(path + ".z"),
+                (float)cfg.getDouble(path + ".yaw"),
+                (float)cfg.getDouble(path + ".pitch")
+        );
         player.teleport(loc);
-        player.sendMessage("Teleportowano do domu '" + homeName + "'.");
+        player.sendMessage("Teleportowano do domu '" + name + "'.");
         return true;
     }
 
-	// podpowiedzi
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (!(sender instanceof Player) || args.length != 1) {
-            return Collections.emptyList();
-        }
-
+        if (!(sender instanceof Player) || args.length != 1) return Collections.emptyList();
         Player p = (Player) sender;
         FileConfiguration cfg = plugin.getHomesConfig();
-        ConfigurationSection sec = cfg.getConfigurationSection("players." + p.getUniqueId());
-        if (sec == null) {
-            return Collections.emptyList();
-        }
-
-        String prefix = args[0].toLowerCase();
-        return sec.getKeys(false).stream()
-                  .filter(name -> name.startsWith(prefix))
-                  .collect(Collectors.toList());
+        String base = "players." + p.getUniqueId();
+        ConfigurationSection sec = cfg.getConfigurationSection(base);
+        if (sec == null) return Collections.emptyList();
+        String pref = args[0].toLowerCase();
+        return sec.getKeys(false).stream().filter(k -> k.startsWith(pref)).collect(Collectors.toList());
     }
 }

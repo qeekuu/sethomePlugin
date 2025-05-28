@@ -8,9 +8,11 @@ commands:
   sethome:
     description: Ustawia dom o podanej nazwie
     usage: /sethome <nazwa>
+    aliases: [mhset]
   home:
     description: Teleportuje do ustawionego domu
     usage: /home <nazwa>
+    aliases: [mh]
 permissions:
   multihome.use:
     description: Pozwala korzystać z komend sethome i home

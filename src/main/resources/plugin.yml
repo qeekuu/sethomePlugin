@@ -13,6 +13,10 @@ commands:
     description: Teleportuje do ustawionego domu
     usage: /home <nazwa>
     aliases: [mh]
+  delhome:
+    description: Usuwa ustawiony dom
+    usage: /delhome <nazwa>
+    aliases: [mhd]
 permissions:
   multihome.use:
     description: Pozwala korzystać z komend sethome i home

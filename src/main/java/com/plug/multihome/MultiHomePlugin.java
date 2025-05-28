@@ -23,8 +23,8 @@ public class MultiHomePlugin extends JavaPlugin {
         homesConfig = YamlConfiguration.loadConfiguration(homesFile);
 
         // Rejestracja komend
-        getCommand("setmultihome").setExecutor(new SetHomeCommand(this));
-        getCommand("multihome").setExecutor(new HomeCommand(this));
+        getCommand("sethome").setExecutor(new SetHomeCommand(this));
+        getCommand("home").setExecutor(new HomeCommand(this));
         getLogger().info("MultiHomePlugin włączony!");
     }
 

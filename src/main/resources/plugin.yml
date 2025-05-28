@@ -1,6 +1,6 @@
 name: MultiHome
 main: com.plug.multihome.MultiHomePlugin
-version: 1.0.0
+version: 1.0.1
 authors:
   - domsonhere
 api-version: 1.20

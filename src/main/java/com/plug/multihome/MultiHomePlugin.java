@@ -24,7 +24,10 @@ public class MultiHomePlugin extends JavaPlugin {
 
         // Rejestracja komend
         getCommand("sethome").setExecutor(new SetHomeCommand(this));
+		HomeCommand homeCmd = new HomeCommand(this);
         getCommand("home").setExecutor(new HomeCommand(this));
+		getCommand("home").setTabCompleter(homeCmd);
+		getCommand("mh").setTabCompleter(homeCmd);
         getLogger().info("MultiHomePlugin włączony!");
     }
 

@@ -6,10 +6,16 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.configuration.ConfigurationSection;
 
-public class HomeCommand implements CommandExecutor {
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class HomeCommand implements CommandExecutor, TabCompleter {
     private final MultiHomePlugin plugin;
 
     public HomeCommand(MultiHomePlugin plugin) {
@@ -47,5 +53,25 @@ public class HomeCommand implements CommandExecutor {
         player.teleport(loc);
         player.sendMessage("Teleportowano do domu '" + homeName + "'.");
         return true;
+    }
+
+	// podpowiedzi
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (!(sender instanceof Player) || args.length != 1) {
+            return Collections.emptyList();
+        }
+
+        Player p = (Player) sender;
+        FileConfiguration cfg = plugin.getHomesConfig();
+        ConfigurationSection sec = cfg.getConfigurationSection("players." + p.getUniqueId());
+        if (sec == null) {
+            return Collections.emptyList();
+        }
+
+        String prefix = args[0].toLowerCase();
+        return sec.getKeys(false).stream()
+                  .filter(name -> name.startsWith(prefix))
+                  .collect(Collectors.toList());
     }
 }

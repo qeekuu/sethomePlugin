@@ -1,6 +1,6 @@
 package com.plug.multihome.commands;
 
-import com.example.multihome.MultiHomePlugin;
+import com.plug.multihome.MultiHomePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

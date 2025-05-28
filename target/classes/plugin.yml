@@ -1,8 +1,8 @@
 name: MultiHome
-main: com.plugin.multihome.MultiHomePlugin
+main: com.plug.multihome.MultiHomePlugin
 version: 1.0.0
 authors:
-  - WŁOSZCZ
+  - domsonhere
 api-version: 1.20
 commands:
   sethome:
